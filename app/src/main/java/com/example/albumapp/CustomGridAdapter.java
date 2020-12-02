@@ -42,6 +42,7 @@ public class CustomGridAdapter extends BaseAdapter {
 
             // no previous version of thumbnail held in the scrapview holder define entry in res/values/dimens.xml for grid height,width in dips <dimen name="gridview_size">100dp</dimen> // setLayoutParams will do conversion to physical pixels
             imageView = new ImageView(context);
+
             int gridsize = context.getResources().getDimensionPixelOffset(R.dimen.gridview_size);
             imageView.setLayoutParams(new GridView.LayoutParams(gridsize, gridsize));
             imageView.setScaleType(ImageView.ScaleType.FIT_XY);
@@ -51,6 +52,7 @@ public class CustomGridAdapter extends BaseAdapter {
             imageView = (ImageView) convertView;
         }
         imageView.setImageResource(smallImages[position]);
+        imageView.setBackgroundResource(R.drawable.back);
         imageView.setId(position);
         return imageView;
     }//getView

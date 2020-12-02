@@ -18,7 +18,7 @@ public class MainActivity extends FragmentActivity implements MainCallbacks {
         setContentView(R.layout.activity_main);
 
         ft = getSupportFragmentManager().beginTransaction();
-        topFragment = FragmentTop.newInstance(" ");
+        topFragment = FragmentTop.newInstance(R.layout.top_fragment);
         ft.replace(R.id.holder_top_layout, topFragment);
         ft.commit();
 
@@ -38,7 +38,14 @@ public class MainActivity extends FragmentActivity implements MainCallbacks {
         //Toast.makeText(getApplication(), "MAIN GOT>>"+ sender + "\n"+ strValue , Toast.LENGTH_LONG ).show();
         if (sender.equals("TOP-FRAG")) {
             try {
-                topFragment.onMsgFromMainToFragment(strValue);
+                //topFragment.onMsgFromMainToFragment(strValue);
+
+                ft = getSupportFragmentManager().beginTransaction();
+                topFragment = FragmentTop.newInstance(Integer.parseInt(strValue));
+                ft.replace(R.id.holder_top_layout, topFragment, "TOP-TAG");
+                ft.commit();
+                ft.addToBackStack("T1");
+                getSupportFragmentManager().executePendingTransactions();
             } catch (Exception e) {
                 Log.e("ERROR", "onStrFromFragToMain" + e.getMessage());
             }
@@ -52,6 +59,8 @@ public class MainActivity extends FragmentActivity implements MainCallbacks {
                 ft.commit();
                 ft.addToBackStack("B1");
                 getSupportFragmentManager().executePendingTransactions();
+
+
             } catch (Exception e) {
                 Log.e("ERROR", "onStrFromFragToMain" + e.getMessage());
             }

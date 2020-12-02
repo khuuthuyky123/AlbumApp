@@ -7,23 +7,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
 public class FragmentList extends Fragment implements FragmentCallbacks {
     MainActivity main;
-    ListView listView;
+    GridView gridView;
     Context context = null;
-    Integer[][] thumbnails = {{R.drawable.pic01_small},
-            {R.drawable.pic02_small},
-            {R.drawable.pic03_small},
-            {R.drawable.pic04_small},
-            {R.drawable.pic05_small},
-            {R.drawable.pic06_small},
-            {R.drawable.pic07_small},
-            {R.drawable.pic08_small}};
+    Integer[] thumbnails = {R.drawable.pic01_small, R.drawable.pic02_small, R.drawable.pic03_small, R.drawable.pic04_small,
+            R.drawable.pic05_small, R.drawable.pic06_small, R.drawable.pic07_small, R.drawable.pic08_small};
     String[] dates = {"a", "b", "c", "d", "e", "f", "g", "h"};
 
     public static FragmentList newInstance(String strArg1) {
@@ -49,17 +44,18 @@ public class FragmentList extends Fragment implements FragmentCallbacks {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         LinearLayout view_layout_main = (LinearLayout) inflater.inflate(R.layout.list_image, null);
-        listView = (ListView) view_layout_main.findViewById(R.id.list_image_view);
+        gridView = view_layout_main.findViewById(R.id.grid_image_view);
 
 
-        final CustomListAdapter adapter = new CustomListAdapter(context, R.layout.list_image, thumbnails, dates);
-        listView.setAdapter(adapter);
-        listView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        final CustomGridAdapter adapter = new CustomGridAdapter(context, thumbnails);
+        gridView.setAdapter(adapter);
+        gridView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                main.onMsgFromFragToMain("BLUE-FRAG", "");
+                main.onMsgFromFragToMain("BLUE-FRAG", String.valueOf(position));
+                Toast.makeText(getContext(), String.valueOf(position), Toast.LENGTH_SHORT).show();
             }
 
         });
